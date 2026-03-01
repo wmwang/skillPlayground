@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Workspace outputs (generated eval results)
+azure-devops-patrol-workspace/
+
+# Local Claude Code settings (may contain personal tokens/paths)
+.claude/settings.local.json
+
+# Secrets & credentials
+*.env
+.env*
+*.pat
+secrets.json
