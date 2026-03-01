@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-auto-worker",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "跑一下 auto worker，看看有沒有 [auto] 的工單要處理",
+      "expected_output": "技能觸發，執行 find_work_item.py，根據結果回報有無符合的工作項目。若無，清楚告知使用者目前沒有待處理的 [auto] 工單。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "幫我執行 auto 工單，應該有一個 [auto] 的 task 在 Azure DevOps 等著做",
+      "expected_output": "技能觸發，執行查詢腳本，回報結果。若找到工單則開始執行，若找不到則告知沒有符合條件的工作項目。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "處理 Azure DevOps 裡面有 [auto] 標籤、狀態是 To Do 而且有連結 branch 的工單",
+      "expected_output": "技能觸發，精確執行篩選邏輯（[auto] + To Do + branch），回報查詢結果。",
+      "files": []
+    }
+  ]
+}

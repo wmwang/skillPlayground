@@ -1,4 +1,13 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(echo \"PAT set: $AZURE_DEVOPS_EXT_PAT:+yes$AZURE_DEVOPS_EXT_PAT:-no\")",
+      "Bash(az account show --query \"user.name\" -o tsv)"
+    ],
+    "additionalDirectories": [
+      "/Users/isosoman/Documents/repo/deepwiki_claude/skillPlayground/.claude/skills/azure-auto-worker"
+    ]
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
   }
