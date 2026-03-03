@@ -1,0 +1,17 @@
+{
+  "skill_name": "legacy-code-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我剛接手一個舊的 VB6 庫存管理系統，完全不知道這東西在幹嘛。能幫我分析一下這個專案嗎？路徑是 /Users/isosoman/Documents/repo/deepwiki_claude/skillPlayground/.claude/skills/legacy-code-analyzer-workspace/test-projects/vb6-inventory",
+      "expected_output": "一份 HTML 報告，包含：(1) 專案概覽（VB6 類型、檔案統計）；(2) 兩個 Form 的 UI 說明（frmMain 庫存清單、frmProduct 商品編輯）；(3) 資料庫操作（SQL Server、使用的 Table、主要 SQL 查詢）；(4) 業務邏輯（加權平均成本、安全庫存、EOQ 等庫存計算公式）；(5) 模組函式索引",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我們公司有一套 VB.NET 的訂單管理系統要準備移轉到新平台，請幫我整理一份移轉參考文件，專案在這裡：/Users/isosoman/Documents/repo/deepwiki_claude/skillPlayground/.claude/skills/legacy-code-analyzer-workspace/test-projects/vbnet-orders",
+      "expected_output": "一份 HTML 報告，包含：(1) 專案概覽（VB.NET、各檔案統計）；(2) 訂單清單畫面（frmOrderList）的控制項說明與事件；(3) 資料庫操作（SQL Server、Orders/Customers/OrderDetails 等 Table、分頁查詢/取消訂單的 SQL）；(4) 業務邏輯（訂單金額計算流程、VIP 折扣規則、運費規則）；(5) 函式索引",
+      "files": []
+    }
+  ]
+}

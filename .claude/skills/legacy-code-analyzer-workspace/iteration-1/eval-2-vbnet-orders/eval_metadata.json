@@ -1,0 +1,39 @@
+{
+  "eval_id": 2,
+  "eval_name": "vbnet-orders-migration-doc",
+  "prompt": "我們公司有一套 VB.NET 的訂單管理系統要準備移轉到新平台，請幫我整理一份移轉參考文件，專案在這裡：/Users/isosoman/Documents/repo/deepwiki_claude/skillPlayground/.claude/skills/legacy-code-analyzer-workspace/test-projects/vbnet-orders",
+  "assertions": [
+    {
+      "name": "html_file_generated",
+      "description": "有輸出 .html 報告檔案到 outputs 目錄"
+    },
+    {
+      "name": "mentions_orders_table",
+      "description": "有提到 Orders 資料表及其相關操作"
+    },
+    {
+      "name": "mentions_tax_rate_5pct",
+      "description": "有提到 5% 稅率的業務規則（OrderCalculator.vb 中的 TAX_RATE）"
+    },
+    {
+      "name": "mentions_vip_discount_rules",
+      "description": "有說明 VIP 折扣的分級規則（10萬/20萬/50萬/100萬門檻）"
+    },
+    {
+      "name": "mentions_cancel_order_flow",
+      "description": "有說明取消訂單流程，包含退庫存的邏輯"
+    },
+    {
+      "name": "mentions_free_shipping_threshold",
+      "description": "有提到 NT$3000 免運費門檻"
+    },
+    {
+      "name": "has_navigation_sidebar",
+      "description": "HTML 結構有側邊導覽列或目錄結構"
+    },
+    {
+      "name": "covers_frmOrderList_controls",
+      "description": "報告說明了訂單清單畫面（frmOrderList）的主要控制項（搜尋、分頁等）"
+    }
+  ]
+}

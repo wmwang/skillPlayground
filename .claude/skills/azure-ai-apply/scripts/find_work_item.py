@@ -7,26 +7,51 @@ Find the latest Azure DevOps work item with:
 
 Outputs JSON to stdout with work item details and branch/repo info.
 On failure or not found, outputs JSON with {"found": false, "reason": "..."}.
+
+Environment variables:
+  ADO_PAT      - Personal Access Token (required)
+  ADO_ORG      - Azure DevOps organization (default: isosoman0009)
+  ADO_PROJECT  - Azure DevOps project (default: dev)
+  HTTP_PROXY   - HTTP/HTTPS proxy URL (optional, e.g. http://proxy:8080)
 """
 
 import os
 import sys
 import json
+import ssl
 import base64
 import re
 import urllib.parse
 import urllib.request
 import urllib.error
 
-ORG = "isosoman0009"
-PROJECT = "dev"
+ORG = os.environ.get("ADO_ORG", "isosoman0009")
+PROJECT = os.environ.get("ADO_PROJECT", "dev")
 BASE_URL = f"https://dev.azure.com/{ORG}"
 
 
+def _build_opener():
+    """Build a urllib opener with SSL bypass and optional HTTP proxy."""
+    ssl_ctx = ssl.create_default_context()
+    ssl_ctx.check_hostname = False
+    ssl_ctx.verify_mode = ssl.CERT_NONE
+
+    handlers = [urllib.request.HTTPSHandler(context=ssl_ctx)]
+
+    proxy = os.environ.get("HTTP_PROXY") or os.environ.get("HTTPS_PROXY")
+    if proxy:
+        handlers.insert(0, urllib.request.ProxyHandler({"http": proxy, "https": proxy}))
+
+    return urllib.request.build_opener(*handlers)
+
+
+_opener = _build_opener()
+
+
 def get_pat():
-    pat = os.environ.get("AZURE_DEVOPS_EXT_PAT", "")
+    pat = os.environ.get("ADO_PAT", "")
     if not pat:
-        out = {"found": False, "reason": "AZURE_DEVOPS_EXT_PAT environment variable not set"}
+        out = {"found": False, "reason": "ADO_PAT environment variable not set"}
         print(json.dumps(out))
         sys.exit(1)
     return pat
@@ -42,7 +67,7 @@ def make_request(url, pat, method="GET", data=None, content_type="application/js
     req_data = json.dumps(data).encode() if data is not None else None
     req = urllib.request.Request(url, data=req_data, headers=headers, method=method)
     try:
-        with urllib.request.urlopen(req) as response:
+        with _opener.open(req) as response:
             return json.loads(response.read().decode())
     except urllib.error.HTTPError as e:
         body = e.read().decode()
@@ -53,11 +78,12 @@ def find_candidate_ids(pat):
     """WIQL query: [auto] in title, To Do, newest first."""
     wiql = {
         "query": (
-            "SELECT [System.Id] FROM WorkItems "
-            "WHERE [System.TeamProject] = 'dev' "
-            "AND [System.Title] CONTAINS '[auto]' "
-            "AND [System.State] = 'To Do' "
-            "ORDER BY [System.CreatedDate] DESC"
+            f"SELECT [System.Id] FROM WorkItems "
+            f"WHERE [System.TeamProject] = '{PROJECT}' "
+            f"AND [System.Title] CONTAINS '[ai]' "
+            f"AND [System.State] = 'To Do' "
+            f"AND [Microsoft.VSTS.Common.Activity] = 'Development' "
+            f"ORDER BY [System.CreatedDate] DESC"
         )
     }
     url = f"{BASE_URL}/{PROJECT}/_apis/wit/wiql?api-version=7.0"

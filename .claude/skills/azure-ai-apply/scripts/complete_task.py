@@ -13,26 +13,49 @@ Usage:
   pr_url        - URL of the created pull request
   summary_text  - brief description of what was changed (one or a few sentences)
 
-Requires AZURE_DEVOPS_EXT_PAT environment variable to be set.
+Environment variables:
+  ADO_PAT      - Personal Access Token (required)
+  ADO_ORG      - Azure DevOps organization (default: isosoman0009)
+  ADO_PROJECT  - Azure DevOps project (default: dev)
+  HTTP_PROXY   - HTTP/HTTPS proxy URL (optional, e.g. http://proxy:8080)
 """
 
 import os
 import sys
 import json
+import ssl
 import base64
 import urllib.request
 import urllib.error
 from datetime import datetime
 
-ORG = "isosoman0009"
-PROJECT = "dev"
+ORG = os.environ.get("ADO_ORG", "isosoman0009")
+PROJECT = os.environ.get("ADO_PROJECT", "dev")
 BASE_URL = f"https://dev.azure.com/{ORG}"
 
 
+def _build_opener():
+    """Build a urllib opener with SSL bypass and optional HTTP proxy."""
+    ssl_ctx = ssl.create_default_context()
+    ssl_ctx.check_hostname = False
+    ssl_ctx.verify_mode = ssl.CERT_NONE
+
+    handlers = [urllib.request.HTTPSHandler(context=ssl_ctx)]
+
+    proxy = os.environ.get("HTTP_PROXY") or os.environ.get("HTTPS_PROXY")
+    if proxy:
+        handlers.insert(0, urllib.request.ProxyHandler({"http": proxy, "https": proxy}))
+
+    return urllib.request.build_opener(*handlers)
+
+
+_opener = _build_opener()
+
+
 def get_pat():
-    pat = os.environ.get("AZURE_DEVOPS_EXT_PAT", "")
+    pat = os.environ.get("ADO_PAT", "")
     if not pat:
-        print("Error: AZURE_DEVOPS_EXT_PAT environment variable not set", file=sys.stderr)
+        print("Error: ADO_PAT environment variable not set", file=sys.stderr)
         sys.exit(1)
     return pat
 
@@ -47,7 +70,7 @@ def api_request(url, pat, method="GET", data=None, content_type="application/jso
     req_data = json.dumps(data).encode() if data is not None else None
     req = urllib.request.Request(url, data=req_data, headers=headers, method=method)
     try:
-        with urllib.request.urlopen(req) as response:
+        with _opener.open(req) as response:
             return json.loads(response.read().decode())
     except urllib.error.HTTPError as e:
         body = e.read().decode()

@@ -1,0 +1,39 @@
+{
+  "eval_id": 1,
+  "eval_name": "vb6-inventory-analysis",
+  "prompt": "我剛接手一個舊的 VB6 庫存管理系統，完全不知道這東西在幹嘛。能幫我分析一下這個專案嗎？路徑是 /Users/isosoman/Documents/repo/deepwiki_claude/skillPlayground/.claude/skills/legacy-code-analyzer-workspace/test-projects/vb6-inventory",
+  "assertions": [
+    {
+      "name": "html_file_generated",
+      "description": "有輸出 .html 報告檔案到 outputs 目錄"
+    },
+    {
+      "name": "mentions_form_frmMain",
+      "description": "報告提到主畫面 frmMain（庫存清單畫面）"
+    },
+    {
+      "name": "mentions_form_frmProduct",
+      "description": "報告提到商品編輯畫面 frmProduct"
+    },
+    {
+      "name": "mentions_products_table",
+      "description": "資料庫區段有提到 Products 資料表"
+    },
+    {
+      "name": "shows_sql_examples",
+      "description": "報告中有展示 SQL 查詢語句（不只是文字描述，有實際 SQL）"
+    },
+    {
+      "name": "mentions_inventory_calc_logic",
+      "description": "有說明庫存計算邏輯（如加權平均成本、EOQ、安全庫存等）"
+    },
+    {
+      "name": "has_navigation_sidebar",
+      "description": "HTML 結構有側邊導覽列或目錄結構"
+    },
+    {
+      "name": "mentions_margin_warning_rule",
+      "description": "提到毛利率低於 10% 的商業規則（btnSave 中有此邏輯）"
+    }
+  ]
+}
