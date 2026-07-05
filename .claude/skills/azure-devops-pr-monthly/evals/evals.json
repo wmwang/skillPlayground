@@ -1,0 +1,11 @@
+{
+  "skill_name": "azure-devops-pr-monthly",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "統計過去一個月的 PR 合併績效",
+      "expected_output": "能成功執行 pr_metrics.py，獲取已合併 PR 的統計數據並產出度量報告與活躍排行",
+      "files": []
+    }
+  ]
+}

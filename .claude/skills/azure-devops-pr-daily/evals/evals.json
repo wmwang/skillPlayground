@@ -1,0 +1,11 @@
+{
+  "skill_name": "azure-devops-pr-daily",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "幫我看看專案 dev 的 PR 狀況",
+      "expected_output": "能成功執行 pr_dashboard.py，獲取 my-web-app 的 PR 清單並產出帶有表格與風險警示的報告",
+      "files": []
+    }
+  ]
+}
