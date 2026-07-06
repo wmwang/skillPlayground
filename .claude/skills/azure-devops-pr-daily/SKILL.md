@@ -37,8 +37,8 @@ python3 .claude/skills/azure-devops-pr-daily/scripts/pr_dashboard.py [Repository
 
 | 參數 | 預設值 | 說明 |
 |------|--------|------|
-| Organization | `isosoman0009` | 可透過 `AZURE_DEVOPS_ORG` 自訂 |
-| Project | `dev` | 可透過 `AZURE_DEVOPS_PROJECT` 自訂 |
+| Organization | `aioc` | 可透過 `AZURE_DEVOPS_ORG` 自訂 |
+| Project | `messv` | 可透過 `AZURE_DEVOPS_PROJECT` 自訂 |
 | 🚨 停滯 PR 閥值 | 5 天 | 停留超過此天數標記為 🔴 |
 | 🟡 長期未審閥值 | 3 天 | 停留超過 3 天且無投票者標記為 🟡 |
 | 📝 Draft 過久閥值 | 7 天 | Draft PR 放置超過此天數標記為 📝 |
